@@ -1,0 +1,15 @@
+Package: micro4all
+Title: Microbiome for all
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Nuria",
+           family = "M. Wentzien",
+           role = c("aut", "cre"),
+           email = "nuria.martin@eez.csic.es",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: This package is intended to create and easy workflow for microbiome amplicon analysis. It covers all the journey from ASV inference (DADA2) to obtaining meaningfull information, going through alpha and beta analysis, differential abundances, taxonomical profiling and Constrained Analysis of Principal Coordinates.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
