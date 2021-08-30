@@ -1,3 +1,42 @@
+#'Apply a cut-off based on Mock Community sequencing results
+#'
+#'@description This function reads an OTU table in a specific format and remove
+#'  those ASV which represent less than a calculated percentage of sequences.
+#'  This percentage is calculated based on MOCK community members (more
+#'  information in details).
+#'
+#'
+#'
+#'@param data OTU table as a dataframe, rows corresponding to OTUs and columns
+#'  to classification, followed by samples. MOCK community samples should
+#'  include MOCK in their names.
+#'@param MOCK_composition Dataframe containing classification for the MOCK
+#'  communitusually provided by the company. The first column is the one to be
+#'  used by the function, corresponding to genus level.
+#'
+#'@param ASV_column Name of the column in data where ASV or OTU names are
+#'  stored.
+#'
+#'@return Returns an OTU table with the same structure as data, but with a
+#'  cut-off applied based on MOCK community information and with MOCK samples
+#'  removed.
+#'@export
+#'
+#' @examples
+#'
+#'@details This function is supposed to be used in the following situation. We
+#'  have a metabarcoding experiment for the study of microbial communities. In
+#'  the same run, some samples of a commercial MOCK community were analysed.
+#'  Then, they were processed at bioinformatic level, alongside the main
+#'  experiment samples. The MOCK community results are analyzed through this
+#'  function, comparing its composition with the real composition provided by
+#'  the company. When a microorganism is found that should not be in the MOCK
+#'  community, it is attributed to sequencing errors. Based on the abundance of
+#'  this microorganism (ASV or OTU), the function calculates the percentage of
+#'  sequences that it represents to the total of the MOCK community samples.
+#'  This percentage is used as a cut-off for the main experiment samples, where
+#'  ASVs or OTUs representing less than this percentage are removed.
+#'
 MockCommunity <- function (data, MOCK_composition, ASV_column) {
 
   # Get total number of sequences for each MOCK ASV
@@ -10,26 +49,25 @@ MockCommunity <- function (data, MOCK_composition, ASV_column) {
   # Sort ASV table according to MOCK ASV rel.abundance
   ASV_table_counts_MOCK_sorted <- ASV_table_counts_MOCK[order(ASV_table_counts_MOCK$'Total counts MOCK',decreasing = TRUE),]
 
+  #Calculate percentage
   percentage=NULL
-
-
   for (i in 1:nrow(ASV_table_counts_MOCK_sorted)) {
 
-    if (length(which((ASV_table_counts_MOCK_sorted[i,]$Genus==MOCK_composition)=="TRUE"))!=0) { # for each line, if Genus is equal to any of the MOCK members,continue with the next line (next)
+    if (isTRUE(any(ASV_table_counts_MOCK_sorted$Genus[i] %in% MOCK_composition[,1]))) { # for each line, if Genus is equal to any of the MOCK members,continue with the next line (next)
       next
     }
     else { #if it finds a ASV which does not belong to the MOCK community, make a question to user.
-      n <- readline(prompt=cat(ASV_table_counts_MOCK_sorted[i,][[ASV_column]],
+      answer <- readline(prompt=cat(ASV_table_counts_MOCK_sorted[i,][[ASV_column]],
                                "does not belong to the MOCK community.",
                                "It representes a ",
                                round((ASV_table_counts_MOCK_sorted[i,]$`Total counts MOCK`/sum(ASV_table_counts_MOCK_sorted$`Total counts MOCK`))*100, digits=6),
                                " perc. of the sequences", "\n", "and it classifies as", ASV_table_counts_MOCK_sorted[i,]$Genus, "\n","Do you want to use this ASV to calculate the percentage?", "[answer yes or no]"))
 
-      if (n == "no") { #if the user chooses not to use the first spurious ASV, go to the next one
+      if (answer == "no") { #if the user chooses not to use the first spurious ASV, go to the next one
         next
       }
 
-      if(n=='yes') { #when the user says "yes", store de percentage and print the ASV name, classification and %
+      if(answer=='yes') { #when the user says "yes", store de percentage and print the ASV name, classification and %
         percentage=(ASV_table_counts_MOCK_sorted[i,]$`Total counts MOCK`/sum(ASV_table_counts_MOCK_sorted$`Total counts MOCK`))*100;
         cat("You made a decision!", ASV_table_counts_MOCK_sorted[i,][[ASV_column]], "which classifies as", ASV_table_counts_MOCK_sorted[i,]$Genus,"\n", "and represents a",
             round((ASV_table_counts_MOCK_sorted[i,]$`Total counts MOCK`/sum(ASV_table_counts_MOCK_sorted$`Total counts MOCK`))*100, digits=6),
@@ -43,6 +81,8 @@ MockCommunity <- function (data, MOCK_composition, ASV_column) {
 
 
   }
+
+
   # Remove MOCK columns
   ASV_table_without_MOCK <- ASV_table_counts_MOCK_sorted[,-grep("MOCK", colnames(ASV_table_counts_MOCK_sorted))]
 
