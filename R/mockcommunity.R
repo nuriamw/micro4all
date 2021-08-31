@@ -7,35 +7,39 @@
 #'
 #'
 #'
-#'@param data OTU table as a dataframe, rows corresponding to OTUs and columns
-#'  to classification, followed by samples. MOCK community samples should
-#'  include MOCK in their names.
-#'@param MOCK_composition Dataframe containing classification for the MOCK
-#'  communitusually provided by the company. The first column is the one to be
-#'  used by the function, corresponding to genus level.
+#'@param data a data frame, \strong{rows corresponding to OTUs} and
+#'  \strong{columns to classification}, followed by sample composition. MOCK
+#'  community samples should include the word \emph{MOCK} in their names.
+#'@param MOCK_composition a data frame containing \strong{classification for the
+#'  MOCK community}, usually provided by the company. The first column is the
+#'  one to be used by the function, corresponding to genus level.
 #'
-#'@param ASV_column Name of the column in data where ASV or OTU names are
+#'@param ASV_column name of the column in \code{data} where ASV or OTU names are
 #'  stored.
 #'
-#'@return Returns an OTU table with the same structure as data, but with a
-#'  cut-off applied based on MOCK community information and with MOCK samples
+#'@return Returns a data frame with the same structure as \code{data}, but with
+#'  a \strong{cut-off applied based on MOCK community information} and with MOCK samples
 #'  removed.
+#'
 #'@export
 #'
 #' @examples
 #'
-#'@details This function is supposed to be used in the following situation. We
-#'  have a metabarcoding experiment for the study of microbial communities. In
-#'  the same run, some samples of a commercial MOCK community were analysed.
-#'  Then, they were processed at bioinformatic level, alongside the main
+#'MockCommunity(ASV_table, MOCK_table, "ASV_names")
+#'
+#'@details This function is supposed to be used in the following situation.
+#'  Imagine a  metabarcoding experiment for the study of microbial communities.
+#'  In the same run, some samples of a commercial MOCK community are analysed.
+#'  Then, they are processed at bioinformatic level, alongside the main
 #'  experiment samples. The MOCK community results are analyzed through this
-#'  function, comparing its composition with the real composition provided by
-#'  the company. When a microorganism is found that should not be in the MOCK
-#'  community, it is attributed to sequencing errors. Based on the abundance of
-#'  this microorganism (ASV or OTU), the function calculates the percentage of
-#'  sequences that it represents to the total of the MOCK community samples.
-#'  This percentage is used as a cut-off for the main experiment samples, where
-#'  ASVs or OTUs representing less than this percentage are removed.
+#'  function, comparing its composition with the real composition (known design
+#'  or provided by the company). When a microorganism is found that should not be
+#'  in the MOCK community, it is attributed to sequencing errors. Based on the
+#'  abundance of this microorganism (ASV or OTU), the function calculates the
+#'  \strong{percentage of sequences} that it represents to the total of the MOCK
+#'  community samples. This percentage is used as a cut-off for the main
+#'  experiment samples, where ASVs or OTUs representing less than this
+#'  percentage are removed.
 #'
 MockCommunity <- function (data, MOCK_composition, ASV_column) {
 
