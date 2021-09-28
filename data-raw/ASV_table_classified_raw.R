@@ -43,7 +43,7 @@ sessionInfo()
 library(dada2); packageVersion("dada2")
 library(ShortRead)
 library(devtools)
-path <- "/home/nuria/Escritorio/data_micro4all/" # CHANGE ME to the directory containing the fastq files after unzipping.
+path <- "/home/nuria/Escritorio/data_micro4all_location/" # CHANGE ME to the directory containing the fastq files after unzipping.
 list.files(path)
 
 
@@ -91,6 +91,28 @@ colnames(histogram) <- c("Seq.length", "counts")
 # PLOT HISTOGRAM
 hist(reads@quality@quality@ranges@width, main="Forward length distribution", xlab="Sequence length", ylab="Raw reads")
 
+
+#### FIGARO ####
+
+#### It can happen that figaro doesnt work because forward reads don't have the same length
+#### so let's do a pre-trimming at the proper length (at about 295 pb, as recommended on Issue #37 fígaro)
+
+
+##FILTER READS
+figFs <- file.path(path, "figaro", basename(fnFs))
+figRs <- file.path(path, "figaro", basename(fnRs))
+
+
+out <- filterAndTrim(fnFs, figFs, fnRs, figRs,
+                     compress=TRUE, multithread=TRUE, truncLen=c(295,295)) #
+
+##RUN FIGARO
+figaro <- system(("python3 /home/programs/figaro/figaro/figaro.py -i /home/nuria/Escritorio/data_micro4all_location/figaro -o /home/nuria/Escritorio/data_micro4all_location/figaro -a 426 -f 17 -r 21"),
+                 intern=TRUE) #-a length of your amplicon without primers, -f primer forward length, -r primer reverse length
+
+head(figaro)
+
+#Result, cut at [279,205], maxExpectedError [3,2]
 
 #### IDENTIFY PRIMERS ####
 
@@ -180,63 +202,6 @@ cutRs <- sort(list.files(path.cut, pattern = "_R2_001.fastq", full.names = TRUE)
 plotQualityProfile(cutFs[1:2])
 plotQualityProfile(cutRs[1:2])
 
-#### FIGARO ####
-
-#### It can happen that figaro doesnt work because forward reads don't have the same length
-#### so let's do a pre-trimming at the proper length (check the length with more reads,
-####which should be the expected length without primers). This can be found with an histogram for both forward and reverse reads
-
-
-
-#### HISTOGRAM WITH SEQUENCE LENGTH DISTRIBUTION  ON CUTADAPT SEQUENCES####
-
-reads.cutadaptF <- ShortRead::readFastq(cutFs)
-
-counts= NULL
-uniques <- unique(reads.cutadaptF@quality@quality@ranges@width)
-
-for (i in 1:length(uniques)) {
-  counts<- rbind(counts,length(which(reads.cutadaptF@quality@quality@ranges@width==uniques[i])))
-
-}
-
-
-histogram.cutadaptF <-  cbind(uniques,counts)
-colnames(histogram.cutadaptF) <- c("Seq.length", "counts")
-#write.table(histogram, file="seq_length_distribution_forward.txt", sep="\t", row.names = FALSE)
-
-##Reverse
-
-reads.cutadaptRs <- ShortRead::readFastq(cutRs)
-
-counts= NULL
-uniques <- unique(reads.cutadaptRs@quality@quality@ranges@width)
-
-for (i in 1:length(uniques)) {
-  counts<- rbind(counts,length(which(reads.cutadaptRs@quality@quality@ranges@width==uniques[i])))
-
-}
-
-
-histogram.cutadaptR <-  cbind(uniques,counts)
-colnames(histogram.cutadaptR) <- c("Seq.length", "counts")
-#write.table(histogram, file="seq_length_distribution_forward.txt", sep="\t", row.names = FALSE)
-
-
-##FILTER READS
-figFs <- file.path(path.cut, "figaro", basename(cutFs))
-figRs <- file.path(path.cut, "figaro", basename(cutRs))
-
-
-out <- filterAndTrim(cutFs, figFs, cutRs, figRs,
-                     compress=TRUE, multithread=TRUE, truncLen=c(284,279)) #
-
-##RUN FIGARO
-figaro <- system(("python3 /home/programs/figaro/figaro/figaro.py -i /home/nuria/Escritorio/data_micro4all/cutadapt/figaro -o /home/nuria/Escritorio/data_micro4all/cutadapt/figaro -a 426 -f 1 -r 1"),
-                 intern=TRUE) #-a length of your amplicon without primers, -f primer forward length, -r primer reverse length
-
-head(figaro)
-
 
 ### FILTER AND TRIM SEQUENCES ACCORDING TO FIGARO ####
 
@@ -247,7 +212,7 @@ filtRs <- file.path(path.cut, "filtered", basename(cutRs))
 
 
 start_time_filter <- Sys.time() #For checking running time
-out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs, truncLen=c(266,182),
+out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs, truncLen=c(279,205),
                      maxN=0, maxEE=c(3,2), truncQ=2, rm.phix=TRUE,
                      compress=TRUE, multithread=TRUE, minLen=50)
 
@@ -343,14 +308,14 @@ head(mergers[[1]])
 #### CONSTRUCT SEQUENCE TABLE ####
 seqtab <- makeSequenceTable(mergers)
 dim(seqtab) ##
-#saveRDS(seqtab,'tabla_otu_inicial.rds')
+saveRDS(seqtab,'tabla_otu_inicial.rds')
 
 #### REMOVE CHIMERAS ####
 
 seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=TRUE, verbose=TRUE)
 dim(seqtab.nochim)
 
-#saveRDS(seqtab.nochim, 'nochim')
+saveRDS(seqtab.nochim, 'nochim')
 
 #### INSPECT SEQUENCES LENGTH, NUMBER OF SEQUENCES AND ASV ####
 
@@ -367,10 +332,10 @@ ggplot(data=table_reads_seqlen, aes(x=length, y=count)) + geom_col()
 
 
 ## According to plot and length inspection, choose an interval
-seqtab.nochim <- seqtab.nochim[,nchar(colnames(seqtab.nochim)) %in% seq(401,429)]
+seqtab.nochim <- seqtab.nochim[,nchar(colnames(seqtab.nochim)) %in% seq(402,428)]
 
 ##Save data
-#saveRDS(seqtab.nochim, 'ASV_length_nochim.rds')
+saveRDS(seqtab.nochim, 'ASV_length_nochim.rds')
 
 
 #### CHECK PERCENTAGE OF READS OUT AND SAVE TABLE ####
@@ -385,19 +350,19 @@ rownames(track) <- sample.names
 
 
 track <- track %>%as.data.frame() %>% mutate(Perc.input=filtered*100/input,
-                          Perc.denoisedF= denoisedF*100/filtered,
-                          Perc.denoisedR= denoisedR*100/filtered,
-                          Perc.merged= merged*100/filtered,
-                          Perc.nonchim= nonchim*100/merged)
+                                             Perc.denoisedF= denoisedF*100/filtered,
+                                             Perc.denoisedR= denoisedR*100/filtered,
+                                             Perc.merged= merged*100/filtered,
+                                             Perc.nonchim= nonchim*100/merged)
 
 head(track)
 
-#write.table(track, file="./num_seqs.txt", row.names = T, col.names = T, sep="\t")
+write.table(track, file="./num_seqs.txt", row.names = T, col.names = T, sep="\t")
 
 
 #### TAXONOMY WITH RDP ####
 taxa_rdp <- assignTaxonomy(seqtab.nochim, "/home/nuria/Escritorio/data_micro4all/rdp_train_set_18_H.fa", multithread=TRUE)
-#saveRDS(taxa_rdp, file="taxa_rdp_16S.rds")
+saveRDS(taxa_rdp, file="taxa_rdp_16S.rds")
 
 
 ########################################################################
@@ -429,5 +394,4 @@ ASV_table_classified_raw <- cbind(ASV_seqs, ASV_table_classified_raw)
 
 
 usethis::use_data(ASV_table_classified_raw, overwrite = TRUE)
-
 
