@@ -25,7 +25,7 @@
 #'
 #' levene_location <- Levene.test.alpha(alpha_diversity_table, 4, "location")
 #'
-Levene.test.alpha <- function (data, numberOfIndexes,formula,...) {
+levene.test.alpha <- function (data, numberOfIndexes,formula,...) {
   ##Create names
 
   res.levene<- NULL
