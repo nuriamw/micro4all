@@ -25,7 +25,7 @@
 #'
 #' levene_rhizo <- Levene.test.alpha(alpha_indexes, 4, "Management")
 #'
-Levene.test.alpha <- function (data, numberOfIndexes,formula,...) {
+levene.test.alpha <- function (data, numberOfIndexes,formula,...) {
   ##Create names
 
   res.levene<- NULL
