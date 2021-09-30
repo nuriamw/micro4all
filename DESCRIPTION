@@ -25,7 +25,6 @@ Imports:
     agricolae,
     car,
     stats,
-    ANCOMBC,
     pairwiseAdonis,
     phyloseq,
     BiocGenerics,
@@ -36,3 +35,5 @@ Imports:
     tibble,
     magrittr
 VignetteBuilder: knitr
+Suggests:
+    ANCOMBC
