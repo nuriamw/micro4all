@@ -17,7 +17,7 @@
 #'@param ... Further arguments to be passed to \link[phyloseq]{distance} function from
 #'  package \code{phyloseq}.
 #'@param adonis.options Further arguments to be passed to \link[vegan]{adonis}. They
-#'  should be included as a list (see \link[micro4all]{examples})
+#'  should be included as a list (see \code{examples})
 #'
 #'@return Returns a list with to elements: \enumerate{ \item A data frame
 #'  containing the \code{aov.tab} component of resulting \link[vegan]{anova.cca}
@@ -34,17 +34,18 @@
 #' @examples
 #'
 #'
-#'permanova_rhizo<- Permanova(physeq_norm_rhizo,distances = c("bray", "unifrac", "wunifrac"), formula = "Management", adonis.options= list(Permutations=200))
+#'permanova_location<- Permanova(normalized_phyloseq,distances = c("bray",
+#' "unifrac", "wunifrac"), formula = "location", adonis.options= list(Permutations=200))
 #'
 #'
 Permanova <- function(data,formula, distances,type="samples", adonis.options,...){
   permanova.results<- list()
   distanceColumn <- NULL
   permanova.table <- NULL
-  df <- data.frame(sample_data(data))
-  form <- as.formula(paste("d", formula, sep="~"))
+  df <- data.frame(phyloseq::sample_data(data))
+  form <- stats::as.formula(paste("d", formula, sep="~"))
   for (i in 1:length(distances)){
-    d<-phyloseq::distance(data,distances[i],type=type...)
+    d<-phyloseq::distance(data,distances[i],type=type,...)
     if (missing(adonis.options)){
       permanova.results[[i]]=vegan::adonis(formula=form, data = df)
 

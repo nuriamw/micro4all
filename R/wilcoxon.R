@@ -7,13 +7,13 @@
 #'
 #'
 #'@param numberOfIndexes Integer corresponding to the number of indexes to
-#'  analyze. This will be take as column numbers by the function.
+#'  analyze. This will be taken as column numbers by the function.
 #'@param formula  Metadata group name. This will group samples according to a
 #'  metadata column (corresponding to \code{g} argument in
 #'  \code{pairwise.wilcox.test}, representing grouping vector or factor).
 #'@param p.adjust.method method for adjusting p values (see
 #'  \link[stats]{p.adjust}). Can be abbreviated
-#'@param ... Further arguments passed to \code{pairwise.wilcox.test}.
+#'@param ... Further arguments passed to \link[stats]{pairwise.wilcox.test}.
 #'
 #'@return Returns a data frame with adjusted p-values for all pairwise
 #'comparisons, performed on each variable  (determined by
@@ -23,7 +23,7 @@
 #'@export
 #'
 #' @examples
-#'wilcoxon_rhizo_plots<- wilcoxon.test(alpha_indexes_rhizo, 4, "Plot", p.adjust.method="BH")
+#'wilcoxon_location<- wilcoxon.test(alpha_diversity_table, 4, "location", p.adjust.method="BH")
 #'
 wilcoxon.test <- function(data, numberOfIndexes,formula, p.adjust.method,...){
   wilcoxon.result<- NULL

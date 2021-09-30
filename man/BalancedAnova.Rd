@@ -9,7 +9,7 @@ BalancedAnova(data, numberOfIndexes, formula, ...)
 \arguments{
 \item{data}{a data frame, columns corresponding to indexes and rows
 corresponding to samples. Further columns should be included with metadata.
-This is used for Formula as a grouping factor.}
+This is used in argument \code{Formula}}
 
 \item{numberOfIndexes}{Integer corresponding to the number of indexes to
 analyze. This will be take as column numbers by the function.}
@@ -17,14 +17,14 @@ analyze. This will be take as column numbers by the function.}
 \item{formula}{Metadata group name. This will group samples according to a
 metadata column and specify the model.}
 
-\item{...}{Further arguments passed to \code{aov}.}
+\item{...}{Further arguments passed to \link[stats]{aov}.}
 }
 \value{
 Returns a list of two elements. First element is a data frame,
-containing the summary statistics from \code{aov} on different indexes (indexes
+containing the summary statistics from \link[stats]{aov} on different indexes (indexes
 names are shown in the IndexColumn). Second element is a list, composed of
 as many list as indexes were analyzed. These contain the complete results
-from \code{aov}.
+from \link[stats]{aov}.
 }
 \description{
 This function fits an analysis of variance model (ANOVA) for
@@ -33,7 +33,7 @@ as rows. Further columns should include metadata.
 }
 \examples{
 
-balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management")
+balanced_anova<- BalancedAnova(alpha_diversity_table, numberOfIndexes = 4, formula = "location")
 
 
 }

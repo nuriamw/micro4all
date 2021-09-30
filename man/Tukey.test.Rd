@@ -4,7 +4,15 @@
 \alias{Tukey.test}
 \title{Multiple comparisons for multiple variables: balanced and unbalanced.}
 \usage{
-Tukey.test(data, numberOfIndexes, formula, balanced, ...)
+Tukey.test(
+  data,
+  numberOfIndexes,
+  formula,
+  balanced,
+  ...,
+  aov.options,
+  HSD.options
+)
 }
 \arguments{
 \item{data}{a data frame, columns corresponding to indexes and rows
@@ -20,26 +28,39 @@ metadata column and specify the model.}
 \item{balanced}{whether to perform a balanced (TRUE) or unbalanced (FALSE)
 test}
 
-\item{...}{Further arguments to be passed to \code{HSD.test} or
-\code{TukeyHSD}}
+\item{...}{Further arguments to be passed to \link[agricolae]{HSD.test} or
+\link[stats]{TukeyHSD}}
+
+\item{aov.options}{Further arguments to be passed to \link[stats]{aov}. They
+should be included as a list (see \code{examples})}
+
+\item{HSD.options}{Further arguments to be passed to \link[agricolae]{HSD.test}. They
+should be included as a list (see \code{examples})}
 }
 \value{
 Returns a data frame with as many comparisons as groups, performed for
 all variables (determined by \code{numberOfIndexes}). Details about
-parameters should be check with \code{?TukeyHSD} and \code{?HSD.test}. If
+parameters should be check in \link[stats]{TukeyHSD} and \link[agricolae]{HSD.test}. If
 \code{balanced=FALSE}, it returns the \code{comparison} element of
-\code{HSD.test}.
+\link[agricolae]{HSD.test}.
 }
 \description{
 Performs multiple comparisons in each variable. Variables should
-be columns in \code{data}. This function is based on \code{TukeyHSD} and
-\code{HSD.test} from packages \code{stats} and \code{agricolae} for multiple
-comparisons. These are subsequently based on \code{aov} from \code{stats}
+be columns in \code{data}. This function is based on \link[stats]{TukeyHSD} and
+\link[agricolae]{HSD.test} from packages \code{stats} and \code{agricolae} for multiple
+comparisons. These are subsequently based on \link[stats]{aov} from \code{stats}
 for model design.
 }
 \examples{
 
-tukey_balanced<- Tukey.test(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management", balanced=TRUE)
-tukey_unbalanced<- Tukey.test(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management", balanced=FALSE)
+tukey_balanced<- Tukey.test(alpha_diversity_table,
+numberOfIndexes = 4, formula = "location", balanced=TRUE)
+tukey_unbalanced<- Tukey.test(alpha_diversity_table,
+numberOfIndexes = 4, formula = "location", balanced=FALSE)
+
+
+ tukey_unbalanced_options<- Tukey.test(alpha_diversity_table,
+numberOfIndexes = 4, formula = "location", balanced=FALSE, aov.options=list(qr=TRUE, projections=TRUE))
+
 
 }

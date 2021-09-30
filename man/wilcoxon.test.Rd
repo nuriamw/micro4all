@@ -13,7 +13,7 @@ This is used in argument \code{formula}. Further details to be found in
 \link[stats]{pairwise.wilcox.test}.}
 
 \item{numberOfIndexes}{Integer corresponding to the number of indexes to
-analyze. This will be take as column numbers by the function.}
+analyze. This will be taken as column numbers by the function.}
 
 \item{formula}{Metadata group name. This will group samples according to a
 metadata column (corresponding to \code{g} argument in
@@ -22,7 +22,7 @@ metadata column (corresponding to \code{g} argument in
 \item{p.adjust.method}{method for adjusting p values (see
 \link[stats]{p.adjust}). Can be abbreviated}
 
-\item{...}{Further arguments passed to \code{pairwise.wilcox.test}.}
+\item{...}{Further arguments passed to \link[stats]{pairwise.wilcox.test}.}
 }
 \value{
 Returns a data frame with adjusted p-values for all pairwise
@@ -33,6 +33,6 @@ comparisons, performed on each variable  (determined by
 Pairwise Wilcoxon Rank Sum Tests for multiple variables
 }
 \examples{
-wilcoxon_rhizo_plots<- wilcoxon.test(alpha_indexes_rhizo, 4, "Plot", p.adjust.method="BH")
+wilcoxon_location<- wilcoxon.test(alpha_diversity_table, 4, "location", p.adjust.method="BH")
 
 }

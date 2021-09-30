@@ -2,7 +2,7 @@
 
 
 test_that("MOCK community columns are removed", {
-  output <- MockCommunity(ASV_table, MOCK_table, "ASV_names")
+  output <- MockCommunity(ASV_table_classified_raw, mock_composition, "ASV_names", choose.first=TRUE)
 
 
   expect_false(any(grep("MOCK", colnames(output), TRUE)))
@@ -13,7 +13,7 @@ test_that("MOCK community columns are removed", {
 
 
 test_that("Output is a data.frame", {
-  output <- MockCommunity(ASV_table, MOCK_table, "ASV_names")
+  output <- MockCommunity(ASV_table_classified_raw, mock_composition, "ASV_names",choose.first=TRUE)
 
 
   expect_s3_class(output, "data.frame")

@@ -1,3 +1,7 @@
+^renv$
+^renv\.lock$
 ^micro4all\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^data-raw$
+^README\.Rmd$

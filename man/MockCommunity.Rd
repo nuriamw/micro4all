@@ -4,7 +4,7 @@
 \alias{MockCommunity}
 \title{Apply a cut-off based on Mock Community sequencing results}
 \usage{
-MockCommunity(data, MOCK_composition, ASV_column)
+MockCommunity(data, MOCK_composition, ASV_column, choose.first = FALSE)
 }
 \arguments{
 \item{data}{a data frame, \strong{rows corresponding to OTUs} and
@@ -17,11 +17,14 @@ one to be used by the function, corresponding to genus level.}
 
 \item{ASV_column}{name of the column in \code{data} where ASV or OTU names are
 stored.}
+
+\item{choose.first}{whether to choose first spurious ASV found to calculate
+the percentage or not. Default is FALSE. Recommended option is TRUE.}
 }
 \value{
 Returns a data frame with the same structure as \code{data}, but with
-a \strong{cut-off applied based on MOCK community information} and with MOCK samples
-removed.
+a \strong{cut-off applied based on MOCK community information} and with MOCK
+samples removed.
 }
 \description{
 This function reads an OTU table in a specific format and remove
@@ -36,16 +39,17 @@ In the same run, some samples of a commercial MOCK community are analysed.
 Then, they are processed at bioinformatic level, alongside the main
 experiment samples. The MOCK community results are analyzed through this
 function, comparing its composition with the real composition (known design
-or provided by the company). When a microorganism is found that should not be
-in the MOCK community, it is attributed to sequencing errors. Based on the
-abundance of this microorganism (ASV or OTU), the function calculates the
-\strong{percentage of sequences} that it represents to the total of the MOCK
-community samples. This percentage is used as a cut-off for the main
+or provided by the company). When a microorganism is found that should not
+be in the MOCK community, it is attributed to sequencing errors. Based on
+the abundance of this microorganism (ASV or OTU), the function calculates
+the \strong{percentage of sequences} that it represents to the total of the
+MOCK community samples. This percentage is used as a cut-off for the main
 experiment samples, where ASVs or OTUs representing less than this
 percentage are removed.
 }
 \examples{
 
-MockCommunity(ASV_table, MOCK_table, "ASV_names")
+ASV_table_cleaned <- MockCommunity(ASV_table_classified_raw, mock_composition, "ASV_names",
+choose.first=TRUE)
 
 }

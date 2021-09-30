@@ -1,0 +1,512 @@
+proj_sitrep()
+proj_get()
+proj_sitrep()
+devtools::load_all(".")
+use_mit_license("Nuria M. Wentzien")
+library(tidyverse)
+library(devtools)
+use_mit_license("Nuria M. Wentzien")
+use_r("mockcommunity")
+library(ancombc)
+use_git()
+library(tidyverse)
+library(devtools)
+use_git()
+load.all()
+load_all()
+MOCK_composition<- read.table(file="MOCK_community_composition.txt", sep="\t")[1]
+MOCK_composition<- read.table(file="MOCK_community_composition.txt", sep="\t")[1]
+ASV_table_raw <- read.table(file="ASV_table_raw_classified.txt", sep="\t")
+View(ASV_table_raw)
+ASV_filtered_sorted <- MockCommunity(ASV_table_raw, MOCK_composition, "ASV_names")
+ASV_filtered_sorted <- MockCommunity(ASV_table_raw, MOCK_composition, "ASV_names")
+load_all()
+ASV_filtered_sorted <- MockCommunity(ASV_table_raw, MOCK_composition, "ASV_names")
+ASV_table <- read.table(file="ASV_table_raw_classified.txt", sep="\t")
+MOCK_composition <- read.table(file="MOCK_community_composition.txt")[1]
+View(MOCK_composition)
+all.equal(MOCK_composition$V1, ASV_table$Genus[1])
+all.equal(current=MOCK_composition$V1, target=ASV_table$Genus[1])
+isTRUE(all.equal(current=MOCK_composition$V1, target=ASV_table$Genus[1]))
+isTRUE(identical(current=MOCK_composition$V1, target=ASV_table$Genus[1]))
+isTRUE(identical(MOCK_composition$V1, ASV_table$Genus[1]))
+identical(MOCK_composition$V1, ASV_table$Genus[1]))
+identical(MOCK_composition$V1, ASV_table$Genus[1])
+identical(MOCK_composition$V1, ASV_table$Genus[1], attrib.as.set = TRUE)
+any(ASV_table$Genus[1] %in% MOCK_composition$V1)
+any(ASV_table$Genus[2] %in% MOCK_composition$V1)
+View(ASV_table)
+MockCommunity <- function (data, MOCK_composition, ASV_column) {
+# Get total number of sequences for each MOCK ASV
+sum_ASVs_MOCK <- rowSums(data[,grep("MOCK", colnames(data)), drop=FALSE])
+# Bind it to ASV_table
+ASV_table_counts_MOCK <-  cbind(data, sum_ASVs_MOCK)
+colnames(ASV_table_counts_MOCK)[ncol(ASV_table_counts_MOCK)] <- c("Total counts MOCK")
+# Sort ASV table according to MOCK ASV rel.abundance
+ASV_table_counts_MOCK_sorted <- ASV_table_counts_MOCK[order(ASV_table_counts_MOCK$'Total counts MOCK',decreasing = TRUE),]
+percentage=NULL
+for (i in 1:nrow(ASV_table_counts_MOCK_sorted)) {
+if (any(ASV_table_counts_MOCK_sorted$Genus[i] %in% MOCK_composition[1])==TRUE) { # for each line, if Genus is equal to any of the MOCK members,continue with the next line (next)
+next
+}
+else { #if it finds a ASV which does not belong to the MOCK community, make a question to user.
+n <- readline(prompt=cat(ASV_table_counts_MOCK_sorted[i,][[ASV_column]],
+"does not belong to the MOCK community.",
+"It representes a ",
+round((ASV_table_counts_MOCK_sorted[i,]$`Total counts MOCK`/sum(ASV_table_counts_MOCK_sorted$`Total counts MOCK`))*100, digits=6),
+" perc. of the sequences", "\n", "and it classifies as", ASV_table_counts_MOCK_sorted[i,]$Genus, "\n","Do you want to use this ASV to calculate the percentage?", "[answer yes or no]"))
+if (n == "no") { #if the user chooses not to use the first spurious ASV, go to the next one
+next
+}
+if(n=='yes') { #when the user says "yes", store de percentage and print the ASV name, classification and %
+percentage=(ASV_table_counts_MOCK_sorted[i,]$`Total counts MOCK`/sum(ASV_table_counts_MOCK_sorted$`Total counts MOCK`))*100;
+cat("You made a decision!", ASV_table_counts_MOCK_sorted[i,][[ASV_column]], "which classifies as", ASV_table_counts_MOCK_sorted[i,]$Genus,"\n", "and represents a",
+round((ASV_table_counts_MOCK_sorted[i,]$`Total counts MOCK`/sum(ASV_table_counts_MOCK_sorted$`Total counts MOCK`))*100, digits=6),
+"perc. of the sequences, was used to calculate the percentage")
+;
+break
+}
+else stop("Error: Answers have to fit  'yes' or 'no'")}
+}
+# Remove MOCK columns
+ASV_table_without_MOCK <- ASV_table_counts_MOCK_sorted[,-grep("MOCK", colnames(ASV_table_counts_MOCK_sorted))]
+# Get number of sequences of each ASV without MOCK
+rownames(ASV_table_without_MOCK) <- NULL
+ASV_sums <- rowSums(ASV_table_without_MOCK[,9:ncol(ASV_table_without_MOCK)])
+# Get total number of sequences
+sum.total<-sum(ASV_sums)
+# Apply percentage to sequence number
+nseq_cutoff<-(percentage/100)*sum.total
+# Filter table.
+ASV_filtered<- ASV_table_without_MOCK[which(ASV_sums>nseq_cutoff),]
+# Sort table in ascending order of ASV names
+ASV_filtered_sorted<-ASV_filtered[order(ASV_filtered[[ASV_column]]),]
+return(ASV_filtered_sorted)
+}
+library(Devtool)
+library(devtools)
+load_all()
+rm(list = c("MockCommunity"))
+load_all()
+MockCommunity(ASV_table,MOCK_composition = MOCK_composition, ASV_column = "ASV_names")
+load_all()
+MockCommunity(ASV_table,MOCK_composition = MOCK_composition, ASV_column = "ASV_names")
+MockCommunity(ASV_table,MOCK_composition = MOCK_composition, ASV_column = "ASV_names")
+MockCommunity(ASV_table,MOCK_composition = MOCK_composition, ASV_column = "ASV_names")
+load_all()
+MockCommunity(ASV_table,MOCK_composition = MOCK_composition, ASV_column = "ASV_names")
+MockCommunity <- function (data, MOCK_composition, ASV_column) {
+# Get total number of sequences for each MOCK ASV
+sum_ASVs_MOCK <- rowSums(data[,grep("MOCK", colnames(data)), drop=FALSE])
+# Bind it to ASV_table
+ASV_table_counts_MOCK <-  cbind(data, sum_ASVs_MOCK)
+colnames(ASV_table_counts_MOCK)[ncol(ASV_table_counts_MOCK)] <- c("Total counts MOCK")
+# Sort ASV table according to MOCK ASV rel.abundance
+ASV_table_counts_MOCK_sorted <- ASV_table_counts_MOCK[order(ASV_table_counts_MOCK$'Total counts MOCK',decreasing = TRUE),]
+percentage=NULL
+for (i in 1:nrow(ASV_table_counts_MOCK_sorted)) {
+if (any(ASV_table_counts_MOCK_sorted$Genus[i] %in% MOCK_composition[1])== FALSE) { # for each line, if Genus is equal to any of the MOCK members,continue with the next line (next)
+next
+}
+else { #if it finds a ASV which does not belong to the MOCK community, make a question to user.
+n <- readline(prompt=cat(ASV_table_counts_MOCK_sorted[i,][[ASV_column]],
+"does not belong to the MOCK community.",
+"It representes a ",
+round((ASV_table_counts_MOCK_sorted[i,]$`Total counts MOCK`/sum(ASV_table_counts_MOCK_sorted$`Total counts MOCK`))*100, digits=6),
+" perc. of the sequences", "\n", "and it classifies as", ASV_table_counts_MOCK_sorted[i,]$Genus, "\n","Do you want to use this ASV to calculate the percentage?", "[answer yes or no]"))
+if (n == "no") { #if the user chooses not to use the first spurious ASV, go to the next one
+next
+}
+if(n=='yes') { #when the user says "yes", store de percentage and print the ASV name, classification and %
+percentage=(ASV_table_counts_MOCK_sorted[i,]$`Total counts MOCK`/sum(ASV_table_counts_MOCK_sorted$`Total counts MOCK`))*100;
+cat("You made a decision!", ASV_table_counts_MOCK_sorted[i,][[ASV_column]], "which classifies as", ASV_table_counts_MOCK_sorted[i,]$Genus,"\n", "and represents a",
+round((ASV_table_counts_MOCK_sorted[i,]$`Total counts MOCK`/sum(ASV_table_counts_MOCK_sorted$`Total counts MOCK`))*100, digits=6),
+"perc. of the sequences, was used to calculate the percentage")
+;
+break
+}
+else stop("Error: Answers have to fit  'yes' or 'no'")}
+}
+# Remove MOCK columns
+ASV_table_without_MOCK <- ASV_table_counts_MOCK_sorted[,-grep("MOCK", colnames(ASV_table_counts_MOCK_sorted))]
+# Get number of sequences of each ASV without MOCK
+rownames(ASV_table_without_MOCK) <- NULL
+ASV_sums <- rowSums(ASV_table_without_MOCK[,9:ncol(ASV_table_without_MOCK)])
+# Get total number of sequences
+sum.total<-sum(ASV_sums)
+# Apply percentage to sequence number
+nseq_cutoff<-(percentage/100)*sum.total
+# Filter table.
+ASV_filtered<- ASV_table_without_MOCK[which(ASV_sums>nseq_cutoff),]
+# Sort table in ascending order of ASV names
+ASV_filtered_sorted<-ASV_filtered[order(ASV_filtered[[ASV_column]]),]
+return(ASV_filtered_sorted)
+}
+MockCommunity(ASV_table,MOCK_composition = MOCK_composition, ASV_column = "ASV_names")
+load_all()
+rm(list = c("MockCommunity"))
+load_all()
+MockCommunity(ASV_table,MOCK_composition = MOCK_composition, ASV_column = "ASV_names")
+MockCommunity(ASV_table,MOCK_composition = MOCK_composition, ASV_column = "ASV_names")
+load_all()
+MockCommunity(ASV_table,MOCK_composition = MOCK_composition, ASV_column = "ASV_names")
+any(ASV_table_counts_MOCK_sorted$Genus[1] %in% MOCK_composition[,1])== FALSE
+any(ASV_table$Genus[1] %in% MOCK_composition[,1])== FALSE
+any(ASV_table$Genus[1] %in% MOCK_composition[,1])
+isTRUE(any(ASV_table$Genus[1] %in% MOCK_composition[,1]))
+load_all()
+MockCommunity(ASV_table,MOCK_composition = MOCK_composition, ASV_column = "ASV_names")
+ASV_mock<-MockCommunity(ASV_table,MOCK_composition = MOCK_composition, ASV_column = "ASV_names")
+View(ASV_mock)
+View(ASV_mock)
+View(ASV_table)
+View(MOCK_composition)
+library(devtools)
+load_all
+load_all()
+?MockCommunity
+load_all()
+?MockCommunity
+load_all()
+document()
+?MockCommunity
+load_all()
+document()
+?MockCommunityç
+?MockCommunity
+check()
+errorCondition()
+ASV_table <- read.table(file="ASV_table_raw_classified.txt")
+usethis::use_data(ASV_table)
+MOCK_table <- read.table(file="MOCK_community_composition.txt")
+usethis::use_data(MOCK_table)
+load_all()
+document()
+test()
+test()
+use_test()
+?expect_snapshot
+test_that("Output is a data.frame", {
+output <- MockCommunity(ASV_table, MOCK_table, "ASV_names")
+expect_is(output, "data.frame")
+})
+library(testthat)
+test_that("Output is a data.frame", {
+output <- MockCommunity(ASV_table, MOCK_table, "ASV_names")
+expect_is(output, "data.frame")
+})
+test_that("MOCK community columns are removed", {
+output <- MockCommunity(ASV_table, MOCK_table, "ASV_names")
+expect_type(output, "data.frame")
+})
+output <- MockCommunity(ASV_table, MOCK_table, "ASV_names")
+output <- MockCommunity(ASV_table, MOCK_table, "ASV_names")
+View(output)
+class(output)
+test_that("Output is a data.frame", {
+output <- MockCommunity(ASV_table, MOCK_table, "ASV_names")
+expect_type(output, "data.frame")
+})
+class(output)
+test_that("Output is a data.frame", {
+output <- MockCommunity(ASV_table, MOCK_table, "ASV_names")
+expect_s3_class(output, "data.frame")
+})
+ASV_talbe[,grep("MOCK", colnames(data)), drop=FALSE]
+ASV_table[,grep("MOCK", colnames(data)), drop=FALSE]
+ASV_table[,grep("MOCK", colnames(ASV_table)), drop=FALSE]
+grep("MOCK", colnames(data))
+grep("MOCK", colnames(ASV_table))
+grepl("MOCK", colnames(ASV_table))
+isTRUE(grepl("MOCK", colnames(ASV_table)))
+isTRUE(grepl("MOCK", colnames(ASV_table)))
+?isTRUE
+isTRUE(grep("MOCK", colnames(ASV_table))==0)
+isTRUE(grep("MOCK", colnames(output))==0)
+isTRUE(length(grep("MOCK", colnames(output)))==0)
+isTRUE(length(grep("MOCK", colnames(ASV_table)))==0)
+test_that("MOCK community columns are removed", {
+output <- MockCommunity(ASV_table, MOCK_table, "ASV_names")
+expect_false(any(grep("MOCK", colnames(output), TRUE)))
+})
+test()
+#LOAD LIBRARIES
+library(devtools)
+library(tidyverse)
+library(fs)
+use_r("BalancedAnova")
+banova.results[[i]]=aov(data[,i] ~ data[,formula], data = data)
+?aov
+use_package(stats)
+use_package("stats")
+?rbind
+?rep
+?rowSums
+?grep
+?readline
+?cat
+alpha_indexes_rhizo <- read.table("alpha_indexes.txt", sep="\t+")
+alpha_indexes_rhizo <- read.table("alpha_indexes.txt", sep="\t")
+View(alpha_indexes_rhizo)
+load_all()
+#' balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management")
+check()
+document()
+check()
+ASV_table <- read.table("ASV_table_raw_classified.txt", sep="\t")
+MOCK_table <- read.table("MOCK_community_composition.txt", sep="\t")
+check()
+test()
+use_r("UnbalancedAnova")
+?aov
+use_package("car")
+load_all()
+balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management")
+load_all()
+balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management")
+load_all()
+balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management")
+balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management")
+#'  as many list as indexes were analyzed. These contain the complete results
+#'  from \code{aov}.
+#'
+#'@export
+#'
+#' @examples
+#'
+#' balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management")
+#'
+#'
+BalancedAnova <- function (data, numberOfIndexes,formula, projections=projections, qr=qr, contrasts=contrasts) {
+banova.results=list()
+banova.table <- NULL
+indexColumn<- NULL
+for (i in 1:numberOfIndexes)
+{
+banova.results[[i]]=stats::aov(data[,i] ~ data[,formula], data = data, projections=projections, qr=qr, contrasts=contrasts)  # Save aov results for each index
+banova.table <- rbind(banova.table,summary(banova.results[[i]])[[1]]) # Save summary in a table
+indexColumn <- rbind(indexColumn, data.frame(rep(colnames(data)[i],2))) # Create a column with index name
+}
+names(banova.results) <- colnames(data[,1:numberOfIndexes])  # Add name of index to complete results
+colnames(indexColumn) <- "IndexColum"
+banova.table <- cbind(banova.table, indexColumn) # Bind index name to table
+return(list(banova.table,banova.results))}
+View(BalancedAnova)
+View(BalancedAnova)
+load_all()
+rm(list=c("BalancedAnova"))
+load_all()
+balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management")
+load_all
+load_all()
+balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management")
+balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management", projections=TRUE)
+View(balanced_anova_rhizo)
+balanced_anova_rhizo[[1]]
+View(balanced_anova_rhizo[[1]])
+balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management", projections=FALSE)
+View(alpha_indexes_rhizo)
+View(balanced_anova_rhizo)
+balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management", projections=FALSE, qr=FALSE)
+View(balanced_anova_rhizo)
+banova.results[[i]]=stats::aov(data[,i] ~ data[,formula], data = data,projections=projections)  # Save aov results for each index
+load_all()
+balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management", projections=FALSE, qr=FALSE)
+load_all()
+balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management", projections=FALSE, qr=FALSE)
+load_all()
+balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management", projections=FALSE, qr=FALSE)
+View(balanced_anova_rhizo)
+load_all()
+balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management", projections=FALSE, qr=FALSE)
+warnings()
+balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management", projections=FALSE, qr=FALSE)
+View(balanced_anova_rhizo)
+View(balanced_anova_rhizo[[1]])
+balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management", projections=FALSE, qr=TRUE)
+View(balanced_anova_rhizo)
+View(balanced_anova_rhizo[[1]])
+?Anova
+?aov
+?Anova
+?aov
+document()
+?UnbalancedAnova
+document()
+?UnbalancedAnova
+document()
+?UnbalancedAnova
+document()
+?UnbalancedAnova
+document()
+?UnbalancedAnova
+document
+document()
+?UnbalancedAnova
+library(eply)
+BalancedAnova <- function (data, numberOfIndexes,formula) {
+banova.results=list()
+banova.table <- NULL
+indexColumn <- NULL
+for (i in 1:numberOfIndexes)
+{
+banova.results[[i]]=aov(data[,i] ~ data[,formula], data = data)
+banova.table <- rbind(banova.table,summary(banova.results[[i]])[[1]])
+indexColumn <- rbind(indexColumn, data.frame(rep(colnames(data)[i],2)))
+}
+names(banova.results) <- colnames(data[,1:numberOfIndexes])
+colnames(indexColumn) <- "IndexColum"
+banova.table <- cbind(banova.table, indexColumn)
+return(list(banova.table,banova.results))
+}
+UnbalancedAnova <- function (data, numberOfIndexes,formula) {
+##Create names
+unbalanced.anova.results <- NULL
+indexColumn <- NULL
+for (i in 1:numberOfIndexes){
+unbalanced.anova.results <- rbind(unbalanced.anova.results,Anova(aov(data[,i] ~ data[,formula], data = data), type="III"))
+indexColumn <- rbind(indexColumn, data.frame(rep(colnames(data)[i],3)))
+}
+colnames(indexColumn) <- "IndexColum"
+unbalanced.anova.results <- cbind(unbalanced.anova.results, indexColumn)
+return(unbalanced.anova.results)
+}
+Tukey.test <- function (data, numberOfIndexes,formula, balanced) {
+tukey.results <- NULL
+if (balanced==TRUE){  for (i in 1:numberOfIndexes){
+tukey.results <- rbind(tukey.results,colnames(data)[i],TukeyHSD(aov(data[,i] ~ data[,formula], data = data))[[1]])
+}
+return(tukey.results)}
+else {
+tukey.results.unbalanced<- NULL
+for (i in 1:numberOfIndexes){
+formuloca <- paste(colnames(data)[i], "~",formula, sep=" ")
+hsd<- HSD.test(aov(as.formula(formuloca), data=data), trt=formula, group=FALSE, unbalanced=TRUE, console=FALSE)[["comparison"]]
+tukey.results.unbalanced <- rbind(tukey.results.unbalanced,colnames(data)[i],hsd)
+}
+return(tukey.results.unbalanced)
+}
+}
+library(devtools)
+use_r("Tuckey.test")
+source("D:/NextCloud_archivos/Holobiont/raices y endosfera/16S/Script_final/micro4all/R/Tuckey.R", echo=TRUE)
+?hsd
+??hsd
+?aov
+?TukeyHSD
+use_package("agricolae")
+use_package("stats")
+library(agricolae)
+?HSD.test
+balanced_anova_rhizo<- BalancedAnova(alpha_indexes_rhizo, numberOfIndexes = 4, formula = "Management")
+use_r("Levene.test.alpha")
+use_r("levene.test.alpha")
+?leveneTest
+use_package("car")
+use_r("shapiro")
+library(devtools)
+R.version
+install.packages("installr")
+install.packages("pkgbuild")
+install.packages("pkgbuild")
+library(pkgbuild)
+has_rtools()
+?use_git
+??use_git
+library(devtools)
+use_git()
+use_r("kruskall.wallis")
+use_git()
+?kruskal.test
+document()
+?kruskalWallis
+use_r("wilcoxon")
+?pairwise.wilcox.test
+document
+document()
+?wilcoxon.test
+document()
+?pairwise.wilcox.test
+?wilcoxon.test
+document()
+?wilcoxon.test
+document()
+use_r(permanova)
+use_r("permanova")
+?adonis
+library(devtools)
+?use_data_raw
+?distance
+?adonis
+?adonis
+?adonis
+?distance
+adsf <- c("hola", "bebe")
+class(adsf)
+library(devtools)
+library(usethis)
+document()
+?Permanova
+?adonis
+?distnace
+?distance
+use_r("betadispersion")
+library(usethis)
+use_r("betadispersion")
+?betadisper
+use_r("dunnT")
+use_package("dunn.test")
+use_r("pairwiseAdonisFun")
+#'@param p.adjust.m
+#'@param pw.options
+#'@param type
+#'@param ...
+#'
+#'
+#'@return
+#'@export
+#'
+#' @examples
+PairwiseAdonisFun <- function(data,formula, distances, pval, p.adjust.m="BH",pw.options, type="samples",... ){
+df <- data.frame(phyloseq::sample_data(data))
+tOTUs_rhizo <- t(phyloseq::otu_table(data))
+table_vegan_rhizo <- cbind(tOTUs_rhizo, df)
+pw.result.sig <- NULL
+pw.table <- NULL
+distanceColumn <- NULL
+for (i in 1:length(distances)){
+d<-phyloseq::distance(data,distances[i], type=type,...)
+if (missing(pw.options)){pw.result <- pairwiseAdonis::pairwise.adonis(x=d, table_vegan_rhizo[,formula], p.adjust.m = p.adjust.m)
+}
+else{pw.result <- do.call(pairwiseAdonis::pairwise.adonis, c(list(x=d, factors=table_vegan_rhizo[,formula], p.adjust.m = p.adjust.m),pw.options))}
+pw.result.sig <-rbind(pw.result.sig, pw.result[which(pw.result$p.adjusted<pval),])
+distanceColumn <- rbind(distanceColumn, data.frame(rep(distances[i],nrow(pw.result[which(pw.result$p.adjusted<pval),]))))
+}
+colnames(distanceColumn) <- "distances"
+pw.table <-  cbind(pw.result.sig, distanceColumn)
+return(pw.table)
+}
+document()
+library(usethis)
+document()
+library(devtools)
+document()
+rm(list = c("PairwiseAdonisFun"))
+document()
+library(forcats)
+f <- factor(c("a", "b", "c", "d"), levels = c("b", "c", "d", "a"))
+fct_relevel(f)
+fct_relevel(f, "a")
+fct_relevel(f, "b", "a")
+fct_relevel(f, "c")
+fct_relevel(f, "c", after=1)
+fct_relevel(f, "c", after=0)
+fct_relevel(f, "d", after=0)
+fct_relevel(f, "a", after=0)
+fct_relevel(f, "c", after=Inf)
+fct_relevel(f, "b", after=Inf)
+f <- fct_relevel(f, "b", after=Inf)
+f <- fct_relevel(f, "c", after=Inf)
+f
+f <- fct_relevel(f, "d", after=Inf)
+f

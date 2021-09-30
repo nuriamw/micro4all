@@ -17,12 +17,12 @@ analyze. This will be take as column numbers by the function.}
 \item{formula}{Metadata group name. This will group samples according to a
 metadata column and specify the model.}
 
-\item{...}{Further arguments to be passed to \code{leveneTest}.}
+\item{...}{Further arguments to be passed to \link[car]{leveneTest}.}
 }
 \value{
-returns a data frame with results from \code{leveneTest} from package \code{car}
+returns a data frame with results from \link[car]{leveneTest} from package \code{car}
 for each variable (determined by \code{numberOfIndexes}).Further details can
-be found in \code{?leveneTest}
+be found in \link[car]{leveneTest}
 }
 \description{
 Test homogeneity of variance across groups, looping across
@@ -30,6 +30,6 @@ multiple variables (e.g. alpha diversity indexes).
 }
 \examples{
 
-levene_rhizo <- Levene.test.alpha(alpha_indexes, 4, "Management")
+levene_location <- Levene.test.alpha(alpha_diversity_table, 4, "location")
 
 }

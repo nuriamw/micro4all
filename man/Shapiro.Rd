@@ -17,10 +17,11 @@ analyze. This will be take as column numbers by the function.}
 \item{formula}{Metadata group name. This will group samples according to a
 metadata column and specify the model.}
 
-\item{...}{Further arguments to be passed to \code{aov}.}
+\item{...}{Further arguments to be passed to \link[stats]{aov}.}
 }
 \value{
-A data frame with p-values for each variable analyzed. \code{indexColumn} indicates variables names.
+A data frame with p-values for each variable analyzed.
+\code{indexColumn} indicates variables names.
 }
 \description{
 Computes a Shapiro-Wilk Normality test based on a model produced
@@ -28,7 +29,7 @@ with \code{aov}. It loops over multiple variables, determined by
 \code{numberOfIndexes}.
 }
 \examples{
-shapiro_rhizo<-Shapiro(alpha_indexes_rhizo, 4, "Management")
+shapiro_location<-Shapiro(alpha_diversity_table, 4, "location")
 
 
 

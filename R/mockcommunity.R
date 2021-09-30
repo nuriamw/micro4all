@@ -16,16 +16,19 @@
 #'
 #'@param ASV_column name of the column in \code{data} where ASV or OTU names are
 #'  stored.
+#'@param choose.first  whether to choose first spurious ASV found to calculate
+#'  the percentage or not. Default is FALSE. Recommended option is TRUE.
 #'
 #'@return Returns a data frame with the same structure as \code{data}, but with
-#'  a \strong{cut-off applied based on MOCK community information} and with MOCK samples
-#'  removed.
+#'  a \strong{cut-off applied based on MOCK community information} and with MOCK
+#'  samples removed.
 #'
 #'@export
 #'
 #' @examples
 #'
-#'MockCommunity(ASV_table, MOCK_table, "ASV_names")
+#'ASV_table_cleaned <- MockCommunity(ASV_table_classified_raw, mock_composition, "ASV_names",
+#'choose.first=TRUE)
 #'
 #'@details This function is supposed to be used in the following situation.
 #'  Imagine a  metabarcoding experiment for the study of microbial communities.
@@ -33,15 +36,15 @@
 #'  Then, they are processed at bioinformatic level, alongside the main
 #'  experiment samples. The MOCK community results are analyzed through this
 #'  function, comparing its composition with the real composition (known design
-#'  or provided by the company). When a microorganism is found that should not be
-#'  in the MOCK community, it is attributed to sequencing errors. Based on the
-#'  abundance of this microorganism (ASV or OTU), the function calculates the
-#'  \strong{percentage of sequences} that it represents to the total of the MOCK
-#'  community samples. This percentage is used as a cut-off for the main
+#'  or provided by the company). When a microorganism is found that should not
+#'  be in the MOCK community, it is attributed to sequencing errors. Based on
+#'  the abundance of this microorganism (ASV or OTU), the function calculates
+#'  the \strong{percentage of sequences} that it represents to the total of the
+#'  MOCK community samples. This percentage is used as a cut-off for the main
 #'  experiment samples, where ASVs or OTUs representing less than this
 #'  percentage are removed.
 #'
-MockCommunity <- function (data, MOCK_composition, ASV_column) {
+MockCommunity <- function (data, MOCK_composition, ASV_column, choose.first=FALSE) {
 
   # Get total number of sequences for each MOCK ASV
   sum_ASVs_MOCK <- rowSums(data[,grep("MOCK", colnames(data)), drop=FALSE])
@@ -60,7 +63,13 @@ MockCommunity <- function (data, MOCK_composition, ASV_column) {
     if (isTRUE(any(ASV_table_counts_MOCK_sorted$Genus[i] %in% MOCK_composition[,1]))) { # for each line, if Genus is equal to any of the MOCK members,continue with the next line (next)
       next
     }
-    else { #if it finds a ASV which does not belong to the MOCK community, make a question to user.
+    else {
+      if (isTRUE(choose.first)) {percentage=(ASV_table_counts_MOCK_sorted[i,]$`Total counts MOCK`/sum(ASV_table_counts_MOCK_sorted$`Total counts MOCK`))*100;
+      cat("First ASV found that does not belong to the MOCK community! It is", ASV_table_counts_MOCK_sorted[i,][[ASV_column]], "which classifies as", ASV_table_counts_MOCK_sorted[i,]$Genus,"\n", "and represents a",
+          round((ASV_table_counts_MOCK_sorted[i,]$`Total counts MOCK`/sum(ASV_table_counts_MOCK_sorted$`Total counts MOCK`))*100, digits=6),
+          "perc. of the sequences. This ASV was used to calculate the percentage"); break}
+
+      #if it finds a ASV which does not belong to the MOCK community, make a question to user.
       answer <- readline(prompt=cat(ASV_table_counts_MOCK_sorted[i,][[ASV_column]],
                                "does not belong to the MOCK community.",
                                "It representes a ",

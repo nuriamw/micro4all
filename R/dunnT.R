@@ -10,7 +10,7 @@
 #'  \link[dunn.test]{dunn.test}.
 #'@param numberOfIndexes Integer corresponding to the number of indexes to
 #'  analyze. This will be taken as column numbers by the function.
-#'@param formul aMetadata group name. This will group samples according to a
+#'@param formula Metadata group name. This will group samples according to a
 #'  metadata column (corresponding to \code{g} argument in \code{dunn.test},
 #'  representing grouping vector or factor).
 #'@param dunn.options Further arguments to be passed to
@@ -19,7 +19,7 @@
 #'  comparisons. See \link[dunn.test]{dunn.test} for more detailes about methods
 #'  and abbreviations. Default is set to  Benjamini-Hochberg adjustment ("BH")
 #'
-#'@return Returns a data frame with adjusted \code{dunn.test} results for all pairwise
+#'@return Returns a data frame with \code{dunn.test} results for all pairwise
 #'comparisons, performed on each variable  (determined by
 #'\code{numberOfIndexes}).For further details on parameters, check \link[dunn.test]{dunn.test}.
 #'
@@ -29,7 +29,7 @@
 #'@export
 #'
 #' @examples
-#' dunn_endo_plots <- DunnT(alpha_indexes_endo,4,"Plot")
+#' dunn_location <- dunnT(alpha_diversity_table,4,"location")
 #'
 #'
 dunnT<- function(data,numberOfIndexes,formula, dunn.options, method="BH"){

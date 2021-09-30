@@ -1,8 +1,8 @@
 #'Shapiro-Wilk Normality test for multiple variables.
 #'
 #'@description Computes a Shapiro-Wilk Normality test based on a model produced
-#'with \code{aov}. It loops over multiple variables, determined by
-#'\code{numberOfIndexes}.
+#'  with \code{aov}. It loops over multiple variables, determined by
+#'  \code{numberOfIndexes}.
 #'
 #'
 #'@param data a data frame, columns corresponding to indexes and rows
@@ -12,15 +12,15 @@
 #'  analyze. This will be take as column numbers by the function.
 #'@param formula Metadata group name. This will group samples according to a
 #'  metadata column and specify the model.
-#'@param ... Further arguments to be passed to \code{aov}.
+#'@param ... Further arguments to be passed to \link[stats]{aov}.
 #'
-#'@return
-#'A data frame with p-values for each variable analyzed. \code{indexColumn} indicates variables names.
+#'@return A data frame with p-values for each variable analyzed.
+#'\code{indexColumn} indicates variables names.
 #'
 #'@export
 #'
 #' @examples
-#' shapiro_rhizo<-Shapiro(alpha_indexes_rhizo, 4, "Management")
+#' shapiro_location<-Shapiro(alpha_diversity_table, 4, "location")
 #'
 #'
 #'
@@ -30,7 +30,7 @@ Shapiro<- function (data, numberOfIndexes,formula,...) {
   res.shapiro<- NULL
   indexColumn <- NULL
   for (i in 1:numberOfIndexes){
-    shapiro <- stats::shapiro.test(residuals(stats::aov(data[,i] ~ data[,formula], data = data,...)))[["p.value"]]
+    shapiro <- stats::shapiro.test(BiocGenerics::residuals(stats::aov(data[,i] ~ data[,formula], data = data,...)))[["p.value"]]
     res.shapiro<- rbind(res.shapiro, shapiro)
     indexColumn <- rbind(indexColumn, data.frame(colnames(data)[i]))
 

@@ -11,11 +11,11 @@
 #'  analyze. This will be take as column numbers by the function.
 #'@param formula  Metadata group name. This will group samples according to a
 #'  metadata column and specify the model.
-#'@param ... Further arguments to be passed to \code{leveneTest}.
+#'@param ... Further arguments to be passed to \link[car]{leveneTest}.
 #'
-#'@return  returns a data frame with results from \code{leveneTest} from package \code{car}
+#'@return  returns a data frame with results from \link[car]{leveneTest} from package \code{car}
 #'  for each variable (determined by \code{numberOfIndexes}).Further details can
-#'  be found in \code{?leveneTest}
+#'  be found in \link[car]{leveneTest}
 #'
 #'
 #'
@@ -23,7 +23,7 @@
 #'
 #' @examples
 #'
-#' levene_rhizo <- Levene.test.alpha(alpha_indexes, 4, "Management")
+#' levene_location <- Levene.test.alpha(alpha_diversity_table, 4, "location")
 #'
 Levene.test.alpha <- function (data, numberOfIndexes,formula,...) {
   ##Create names
@@ -35,4 +35,11 @@ Levene.test.alpha <- function (data, numberOfIndexes,formula,...) {
     res.levene<- rbind(res.levene,lev)
     indexColumn <- rbind(indexColumn, data.frame(rep(colnames(data)[i],nrow(lev))))
 
-  }}
+  }
+  colnames(indexColumn) <- "IndexColumn"
+  res.levene.index <- cbind(res.levene, indexColumn)
+  return(res.levene.index)
+
+
+
+  }
