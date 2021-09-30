@@ -60,7 +60,8 @@ numberOfIndexes = 4, formula = "location", balanced=FALSE)
 
 
  tukey_unbalanced_options<- Tukey.test(alpha_diversity_table,
-numberOfIndexes = 4, formula = "location", balanced=FALSE, aov.options=list(qr=TRUE, projections=TRUE))
+numberOfIndexes = 4, formula = "location", balanced=FALSE,
+ aov.options=list(qr=TRUE, projections=TRUE))
 
 
 }
