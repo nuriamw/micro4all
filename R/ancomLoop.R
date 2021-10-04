@@ -79,11 +79,52 @@ ancomloop <-  function (input_object_phyloseq, grouping,
     ######################PROCESS RESULTS########################################
 
     #Save each element as data frame
-    table_ancom <- as.data.frame(response_out$res)
-    #Change colnames to reflect comparison. By default, ANCOM produces a name
-    #which is composed Parameter + Grouping argument + Group to be compared
-    #with.
-    colnames(table_ancom ) <-  paste0(gsub(grouping, paste0(levels(mt[[grouping]])[i],"vs"), colnames(table_ancom)), "_", names(response_out$res))
+    table_ancom <- response_out$res
+    #Change colnames to reflect comparison and reorder it.
+
+    #First, save each index (it containes as many columns as comparisons)
+    beta <- table_ancom$beta
+    se <- table_ancom$se
+    W <-  table_ancom$W
+    pval <- table_ancom$p_val
+    qval <- table_ancom$q_val
+    diff <- table_ancom$diff_abn
+
+
+    #Create name for every comparison (for example,location1 vs location 2, location 1 vs location 3)
+    comparison_name <-  NULL
+    for(j in 1:(length(levels(reord_levels))-1)){
+      comparison_name <-  append(comparison_name,paste0(levels(reord_levels)[1],"vs",levels(reord_levels)[j+1]))
+    }
+
+
+    #Now, paste these comparison name with index name
+    colnames(beta) = paste0(comparison_name,"_beta")
+    colnames(se) = paste0(comparison_name,"_SE")
+    colnames(W) = paste0(comparison_name,"_W")
+    colnames(pval) = paste0(comparison_name,"_pvalue")
+    colnames(qval) = paste0(comparison_name,"_padjusted")
+    colnames(diff) = paste0(comparison_name,"_diff")
+
+    #Each index table is properly labeled. Then, we will paste the first element
+    #of each index, in that way, we'll get all columns for each comparison
+    #together
+
+    tabla_ancom_sorted <- NULL
+    for (l in 1:length(table_ancom$beta)){
+
+      if(l==1){
+        tabla_ancom_sorted <- cbind(beta[l], se[l], W[l], pval[l], qval[l], diff[l])
+
+      } else{
+        tabla_ancom_sorted <- cbind(tabla_ancom_sorted,beta[l], se[l], W[l], pval[l], qval[l], diff[l])
+
+      }
+
+
+    }
+
+
     # BIND TAXONOMY AND CORRECTED ABUNDANCES
     taxa <- phyloseq::tax_table(input_object_phyloseq)
 
@@ -114,7 +155,7 @@ ancomloop <-  function (input_object_phyloseq, grouping,
 
     #################### Merge table with ANCOM Results #########################
 
-    table_ancom_log <- merge(merged_table, table_ancom, by=0) %>% tibble::column_to_rownames("Row.names")
+    table_ancom_log <- merge(merged_table, tabla_ancom_sorted, by=0) %>% tibble::column_to_rownames("Row.names")
 
     ##IF out.unclassified set to TRUE, filter unclassified taxa at taxonomical level set by tax.out
     if (isTRUE(out.unclassified)){
