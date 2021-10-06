@@ -824,7 +824,7 @@ pairwise
 It seems that, according to statistical analysis used and with Bray-Curtis distances, all groups are grouped distinctively. 
 For visualization, we can use PCoA and NMDS with every measure. Here it is a loop for producing every possible graphic. It assigns each graphic to elements of a list. 
 
-```{r}
+```{r, results='hide'}
 var_list <-  c("bray", "unifrac", "wunifrac")
 plot_type <-  c("PCoA", "NMDS")
 combination_plot <- purrr::cross2(plot_type,var_list )
