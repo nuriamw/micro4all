@@ -1,0 +1,4 @@
+navbar:
+  structure:
+    left:  [home, intro, reference, articles, tutorial]
+    right: [github]

@@ -1,5 +1,0 @@
-navbar:
-    - icon: fa-home
-      href: index.html
-    -  text: Installation
-      href: articles/package_workflow.html
