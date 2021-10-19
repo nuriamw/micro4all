@@ -6,23 +6,23 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of is to unify all functions used in our laboratory to get a
-complete analysis of amplicon data for microbial community studies. It
-includes several useful tools, as an *automatized detection of MOCK
-community* and calculation of *community cut-off* as well as loops for
-statistical analysis.
+The goal of *micro4all* is to unify all functions used in our laboratory
+to get a complete analysis of amplicon data for microbial community
+studies. It includes several useful tools, as an *automatized detection
+of MOCK community* and calculation of *community cut-off* as well as
+loops for statistical analysis.
 
-## Installation
+## <i class="fas fa-cogs" aria-hidden="true"></i> Installation
 
-You can install directly from GitHub with:
+You can install *micro4all* directly from GitHub with:
 
 ``` r
 devtools::install_github("nuriamw/micro4all")
 ```
 
-## How to use it?
+## <i class="fas fa-info-circle" aria-hidden="true"></i> How to use it?
 
 Along with this package, a full and detailed workflow has been created.
 There, you can find our usual pipeline for data analysis and examples of
-functions. Check the tutorial
+*micro4all* functions. Check the tutorial
 [here](https://nuriamw.github.io/micro4all/tutorial/package_workflow.html)
