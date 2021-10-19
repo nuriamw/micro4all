@@ -24,10 +24,10 @@ The goal of \code{micro4all} is to unify all functions used in our laboratory to
 
 You can install \code{micro4all} directly from GitHub with:
 
-```{r}
+```{r,eval=FALSE}
 devtools::install_github("nuriamw/micro4all")
 ```
 
 ## How to use it?
 
-Along with this package, a full and detailed workflow has been created. There, you can find our usual pipeline for data analysis and examples of \code{micro4all} functions. Check the tutorial [here](.docs\tutorial) 
+Along with this package, a full and detailed workflow has been created. There, you can find our usual pipeline for data analysis and examples of \code{micro4all} functions. Check the tutorial [here](https://nuriamw.github.io/micro4all/tutorial/package_workflow.html) 
