@@ -19,6 +19,8 @@ navbar:
       href: index.html
     - text: "Tutorial"
       href: tutorial/package_workflow.html
+    - text: "articles"
+      href: articles
   right:
     - icon: fa-github fa-lg
       text: "github"
