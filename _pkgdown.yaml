@@ -11,7 +11,7 @@ template:
 
 navbar:
   structure:
-    left:  [home, reference, Tutorial]
+    left:  [home, reference, Tutorial, articles]
     right: [github]
 
   left:
@@ -19,7 +19,6 @@ navbar:
       href: index.html
     - text: "Tutorial"
       href: tutorial/package_workflow.html
-
   right:
     - icon: fa-github fa-lg
       text: "github"
