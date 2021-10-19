@@ -167,10 +167,85 @@ comparisons, performed on each variable  (determined by
 <code>numberOfIndexes</code>).For further details on parameters, check <a href='https://rdrr.io/pkg/dunn.test/man/dunn.test.html'>dunn.test</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='va'>dunn_location</span> <span class='op'>&lt;-</span> <span class='fu'>dunnT</span><span class='op'>(</span><span class='va'>alpha_diversity_table</span>,<span class='fl'>4</span>,<span class='st'>"location"</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>dunn_location</span> <span class='op'>&lt;-</span> <span class='fu'>dunnT</span><span class='op'>(</span><span class='va'>alpha_diversity_table</span>,<span class='fl'>4</span>,<span class='st'>"location"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   Kruskal-Wallis rank sum test
+#&gt; 
+#&gt; data: x and group
+#&gt; Kruskal-Wallis chi-squared = 1.3386, df = 2, p-value = 0.51
+#&gt; 
+#&gt; 
+#&gt;                            Comparison of x by group                            
+#&gt;                              (Benjamini-Hochberg)                              
+#&gt; Col Mean-|
+#&gt; Row Mean |   location   location
+#&gt; ---------+----------------------
+#&gt; location |  -0.866960
+#&gt;          |     0.2895
+#&gt;          |
+#&gt; location |   0.230009   1.096969
+#&gt;          |     0.4090     0.4090
+#&gt; 
+#&gt; alpha = 0.05
+#&gt; Reject Ho if p &lt;= alpha/2
+#&gt;   Kruskal-Wallis rank sum test
+#&gt; 
+#&gt; data: x and group
+#&gt; Kruskal-Wallis chi-squared = 2.405, df = 2, p-value = 0.3
+#&gt; 
+#&gt; 
+#&gt;                            Comparison of x by group                            
+#&gt;                              (Benjamini-Hochberg)                              
+#&gt; Col Mean-|
+#&gt; Row Mean |   location   location
+#&gt; ---------+----------------------
+#&gt; location |  -0.494974
+#&gt;          |     0.3103
+#&gt;          |
+#&gt; location |   1.025304   1.520279
+#&gt;          |     0.2289     0.1927
+#&gt; 
+#&gt; alpha = 0.05
+#&gt; Reject Ho if p &lt;= alpha/2
+#&gt;   Kruskal-Wallis rank sum test
+#&gt; 
+#&gt; data: x and group
+#&gt; Kruskal-Wallis chi-squared = 4.5, df = 2, p-value = 0.11
+#&gt; 
+#&gt; 
+#&gt;                            Comparison of x by group                            
+#&gt;                              (Benjamini-Hochberg)                              
+#&gt; Col Mean-|
+#&gt; Row Mean |   location   location
+#&gt; ---------+----------------------
+#&gt; location |  -1.060660
+#&gt;          |     0.1444
+#&gt;          |
+#&gt; location |   1.060660   2.121320
+#&gt;          |     0.2166     0.0508
+#&gt; 
+#&gt; alpha = 0.05
+#&gt; Reject Ho if p &lt;= alpha/2
+#&gt;   Kruskal-Wallis rank sum test
+#&gt; 
+#&gt; data: x and group
+#&gt; Kruskal-Wallis chi-squared = 1.5, df = 2, p-value = 0.47
+#&gt; 
+#&gt; 
+#&gt;                            Comparison of x by group                            
+#&gt;                              (Benjamini-Hochberg)                              
+#&gt; Col Mean-|
+#&gt; Row Mean |   location   location
+#&gt; ---------+----------------------
+#&gt; location |   0.000000
+#&gt;          |     0.5000
+#&gt;          |
+#&gt; location |   1.060660   1.060660
+#&gt;          |     0.2166     0.4333
+#&gt; 
+#&gt; alpha = 0.05
+#&gt; Reject Ho if p &lt;= alpha/2</div><div class='input'>
 
-
-</pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

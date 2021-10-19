@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# <i class="fas fa-globe-europe"></i> Micro4all
+# <i class="fas fa-globe-europe" aria-hidden="true"> </i> Micro4all
 
 <!-- badges: start -->
 <!-- badges: end -->

@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# <i class="fas fa-globe-europe"></i> Micro4all
+# <i class="fas fa-globe-europe" aria-hidden="true"> </i> Micro4all
 
 <!-- badges: start -->
 <!-- badges: end -->
