@@ -17,7 +17,7 @@
 #'@param ASV_column name of the column in \code{data} where ASV or OTU names are
 #'  stored.
 #'@param choose.first  whether to choose first spurious ASV found to calculate
-#'  the percentage or not. Default is FALSE. Recommended option is TRUE.
+#'  the percentage or not. Default is FALSE.
 #'
 #'@return Returns a data frame with the same structure as \code{data}, but with
 #'  a \strong{cut-off applied based on MOCK community information} and with MOCK
