@@ -2,7 +2,11 @@ pandoc: 2.11.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles: {}
+<<<<<<< HEAD
 last_built: 2022-03-04T14:08Z
+=======
+last_built: 2022-03-04T14:03Z
+>>>>>>> 64962d0e0ca845ebbe4bc96043a5104e1bab7df8
 urls:
   reference: https://nuriamw.github.io/micro4all//reference
   article: https://nuriamw.github.io/micro4all//articles
