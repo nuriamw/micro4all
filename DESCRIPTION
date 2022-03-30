@@ -33,7 +33,6 @@ Imports:
     BiocGenerics,
     dplyr,
     vegan,
-    forcats,
     tibble,
     magrittr
 VignetteBuilder: knitr
