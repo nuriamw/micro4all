@@ -17,6 +17,8 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
+ ESTO ES UNA PRUEBA 
+ 
 The goal of **micro4all** is to unify all functions used in our laboratory to get a complete analysis of amplicon data for microbial community studies. It includes several useful tools, as an **automatized detection of MOCK community** and calculation of **community cut-off** as well as loops for statistical analysis.  
 
 ## <i class="fas fa-cogs" aria-hidden="true"></i> Installation
