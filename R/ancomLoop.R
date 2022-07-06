@@ -40,7 +40,7 @@
 
 
 ancomloop <-  function (input_object_phyloseq, grouping,
-                        ancom.options, out.unclassified=FALSE, tax.level){
+                               ancom.options, out.unclassified=FALSE, tax.level){
 
   ########################################
   #Make grouping variable a factor
@@ -82,12 +82,12 @@ ancomloop <-  function (input_object_phyloseq, grouping,
     #Change colnames to reflect comparison and reorder it.
 
     #First, save each index (it containes as many columns as comparisons)
-    beta <- table_ancom$beta
-    se <- table_ancom$se
-    W <-  table_ancom$W
-    pval <- table_ancom$p_val
-    qval <- table_ancom$q_val
-    diff <- table_ancom$diff_abn
+    lfc <- table_ancom[[1]]
+    se <- table_ancom[[2]]
+    W <-  table_ancom[[3]]
+    pval <- table_ancom[[4]]
+    qval <- table_ancom[[5]]
+    diff <- table_ancom[[6]]
 
 
     #Create name for every comparison (for example,location1 vs location 2, location 1 vs location 3)
@@ -98,25 +98,25 @@ ancomloop <-  function (input_object_phyloseq, grouping,
 
 
     #Now, paste these comparison name with index name
-    colnames(beta) = paste0(comparison_name,"_beta")
-    colnames(se) = paste0(comparison_name,"_SE")
-    colnames(W) = paste0(comparison_name,"_W")
-    colnames(pval) = paste0(comparison_name,"_pvalue")
-    colnames(qval) = paste0(comparison_name,"_padjusted")
-    colnames(diff) = paste0(comparison_name,"_diff")
+    colnames(lfc) = paste0(comparison_name,"_",names(table_ancom)[1])
+    colnames(se) = paste0(comparison_name,"_",names(table_ancom)[2])
+    colnames(W) = paste0(comparison_name,"_",names(table_ancom)[3])
+    colnames(pval) = paste0(comparison_name,"_",names(table_ancom)[4])
+    colnames(qval) = paste0(comparison_name,"_",names(table_ancom)[5])
+    colnames(diff) = paste0(comparison_name,"_",names(table_ancom)[6])
 
     #Each index table is properly labeled. Then, we will paste the first element
     #of each index, in that way, we'll get all columns for each comparison
     #together
 
     tabla_ancom_sorted <- NULL
-    for (l in 1:length(table_ancom$beta)){
+    for (l in 1:length(table_ancom$lfc)){
 
       if(l==1){
-        tabla_ancom_sorted <- cbind(beta[l], se[l], W[l], pval[l], qval[l], diff[l])
+        tabla_ancom_sorted <- cbind(lfc[l], se[l], W[l], pval[l], qval[l], diff[l])
 
       } else{
-        tabla_ancom_sorted <- cbind(tabla_ancom_sorted,beta[l], se[l], W[l], pval[l], qval[l], diff[l])
+        tabla_ancom_sorted <- cbind(tabla_ancom_sorted,lfc[l], se[l], W[l], pval[l], qval[l], diff[l])
 
       }
 

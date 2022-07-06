@@ -19,7 +19,7 @@ one to be used by the function, corresponding to genus level.}
 stored.}
 
 \item{choose.first}{whether to choose first spurious ASV found to calculate
-the percentage or not. Default is FALSE. Recommended option is TRUE.}
+the percentage or not. Default is FALSE.}
 }
 \value{
 Returns a data frame with the same structure as \code{data}, but with

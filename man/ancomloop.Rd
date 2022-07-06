@@ -14,7 +14,7 @@ ancomloop(
 }
 \arguments{
 \item{input_object_phyloseq}{\link[phyloseq]{phyloseq-class}. For more
-details, check \link[phyloseq]{distance} funtion.}
+details, check \link[phyloseq]{distance} function.}
 
 \item{grouping}{Character string. This is used as metadata variable for
 reordering factors (which allows the function to loop over groups). It is
@@ -34,7 +34,7 @@ filtered out if are unclassified.}
 \value{
 Returns a list with as many arguments as groups are contained in
 metadata "grouping" variable. Each element is named after the group which
-is compared with all others and correspond to a data frame that inlcudes
+is compared with all others and correspond to a data frame that includes
 \link[ANCOMBC]{ancombc} parameters and the bias-adjusted abundance.
 In the process, it prints the groups that are being compared (first group against others).
 }
@@ -43,13 +43,13 @@ This function is a wrapper of \link[ANCOMBC]{ancombc}. When
 having multiple groups to compare, it allows the user to automatically loop
 over them and computes all possible combinations. Along with
 \link[ANCOMBC]{ancombc} results, it appends to each table the taxonomy
-classification and computes the bias-adjusted abundance (expressed as
-logarithm), as well as the standard deviation for each group.
+classification.
 }
 \examples{
 
 ancom_location<- ancomloop(location_phyloseq,grouping="location",
-ancom.options=list(p_adj_method ="holm"), out.unclassified=TRUE, tax.level="Genus")
+ancom.options=list(p_adj_method ="holm"),
+out.unclassified=TRUE, tax.level="Genus")
 
 
 
