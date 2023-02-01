@@ -11,12 +11,12 @@
 #'   also passed to \code{group} and \link{formula} arguments in
 #'   \link[ANCOMBC]{ancombc} function.
 #' @param ancom.options Further arguments to be passed to
-#'   \link[ANCOMBC]{ancombc}. They should be included as a list (see
+#'   \link[ANCOMBC]{ancombc}. They should be included as a list (see more information in
 #'   \code{examples})
 #' @param out.unclassified Whether to filter out unclassified taxa (taxa level
 #'   indicated with argument \code{tax.level}). Default is \code{FALSE}
-#' @param tax.level Character string. Indicates at which level taxa should be
-#'   filtered out if are unclassified.
+#' @param tax.level Character string. Must be a value from 'taxonomyRanks(). Indicates at which level taxa should be
+#'   filtered out if are unclassified and at which taxonomical level ANCOMBC will be applied.
 #'
 #' @return Returns a list with as many arguments as groups are contained in
 #'   metadata "grouping" variable. Each element is named after the group which
@@ -30,7 +30,7 @@
 #' @examples
 #'
 #'ancom_location<- ancomloop(location_phyloseq,grouping="location",
-#'ancom.options=list(p_adj_method ="holm"),
+#'ancom.options=list(p_adj_method ="holm", n_cl=4),
 #'out.unclassified=TRUE, tax.level="Genus")
 #'
 #'
@@ -40,7 +40,7 @@
 
 
 ancomloop <-  function (input_object_phyloseq, grouping,
-                               ancom.options, out.unclassified=FALSE, tax.level){
+                               ancom.options, out.unclassified=FALSE, tax.level=NULL){
 
   ########################################
   #Make grouping variable a factor
@@ -67,10 +67,10 @@ ancomloop <-  function (input_object_phyloseq, grouping,
 
     if (missing(ancom.options)){
 
-      response_out  <-  do.call(ANCOMBC::ancombc, c(list(phyloseq = phy_data_factor,formula = grouping, group=grouping)))
+      response_out  <-  do.call(ANCOMBC::ancombc, c(list(phyloseq = phy_data_factor,formula = grouping, group=grouping, tax_level=tax.level)))
 
     }
-    else {response_out  <-  do.call(ANCOMBC::ancombc, c(list(phyloseq = phy_data_factor,formula = grouping, group=grouping), ancom.options))
+    else {response_out  <-  do.call(ANCOMBC::ancombc, c(list(phyloseq = phy_data_factor,formula = grouping, group=grouping,tax_level=tax.level), ancom.options))
     }
     #Use ancombc on the new phyloseq object
 
@@ -81,7 +81,7 @@ ancomloop <-  function (input_object_phyloseq, grouping,
     table_ancom <- response_out$res
     #Change colnames to reflect comparison and reorder it.
 
-    #First, save each index (it containes as many columns as comparisons)
+    #First, save each index (it contains as many columns as comparisons)
     lfc <- table_ancom[[1]]
     se <- table_ancom[[2]]
     W <-  table_ancom[[3]]
@@ -98,12 +98,12 @@ ancomloop <-  function (input_object_phyloseq, grouping,
 
 
     #Now, paste these comparison name with index name
-    colnames(lfc) = paste0(comparison_name,"_",names(table_ancom)[1])
-    colnames(se) = paste0(comparison_name,"_",names(table_ancom)[2])
-    colnames(W) = paste0(comparison_name,"_",names(table_ancom)[3])
-    colnames(pval) = paste0(comparison_name,"_",names(table_ancom)[4])
-    colnames(qval) = paste0(comparison_name,"_",names(table_ancom)[5])
-    colnames(diff) = paste0(comparison_name,"_",names(table_ancom)[6])
+    colnames(lfc) = c("Intercept_lfc",paste0(comparison_name,"_",names(table_ancom)[1]))
+    colnames(se) = c("Intercept_se",paste0(comparison_name,"_",names(table_ancom)[2]))
+    colnames(W) = c("Intercept_W",paste0(comparison_name,"_",names(table_ancom)[3]))
+    colnames(pval) = c("Intercept_pval",paste0(comparison_name,"_",names(table_ancom)[4]))
+    colnames(qval) = c("Intercept_qval",paste0(comparison_name,"_",names(table_ancom)[5]))
+    colnames(diff) = c("Intercept_diff",paste0(comparison_name,"_",names(table_ancom)[6]))
 
     #Each index table is properly labeled. Then, we will paste the first element
     #of each index, in that way, we'll get all columns for each comparison
@@ -125,7 +125,9 @@ ancomloop <-  function (input_object_phyloseq, grouping,
 
 
     # BIND TAXONOMY AND CORRECTED ABUNDANCES
-    taxa <- phyloseq::tax_table(input_object_phyloseq)
+    glom_phy <- phyloseq::tax_glom(input_object_phyloseq, taxrank = tax.level)
+    taxa <- BiocGenerics::as.data.frame(phyloseq::tax_table(glom_phy))
+    rownames(taxa) <- taxa$genus
 
     #################### Merge table with ANCOM Results #########################
 
