@@ -9,7 +9,7 @@ ancomloop(
   grouping,
   ancom.options,
   out.unclassified = FALSE,
-  tax.level
+  tax.level = NULL
 )
 }
 \arguments{
@@ -22,14 +22,14 @@ also passed to \code{group} and \link{formula} arguments in
 \link[ANCOMBC]{ancombc} function.}
 
 \item{ancom.options}{Further arguments to be passed to
-\link[ANCOMBC]{ancombc}. They should be included as a list (see
+\link[ANCOMBC]{ancombc}. They should be included as a list (see more information in
 \code{examples})}
 
 \item{out.unclassified}{Whether to filter out unclassified taxa (taxa level
 indicated with argument \code{tax.level}). Default is \code{FALSE}}
 
-\item{tax.level}{Character string. Indicates at which level taxa should be
-filtered out if are unclassified.}
+\item{tax.level}{Character string. Must be a value from 'taxonomyRanks(). Indicates at which level taxa should be
+filtered out if are unclassified and at which taxonomical level ANCOMBC will be applied.}
 }
 \value{
 Returns a list with as many arguments as groups are contained in
@@ -48,7 +48,7 @@ classification.
 \examples{
 
 ancom_location<- ancomloop(location_phyloseq,grouping="location",
-ancom.options=list(p_adj_method ="holm"),
+ancom.options=list(p_adj_method ="holm", n_cl=4),
 out.unclassified=TRUE, tax.level="Genus")
 
 
