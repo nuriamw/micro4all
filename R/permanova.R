@@ -47,16 +47,16 @@ Permanova <- function(data,formula, distances,type="samples", adonis.options,...
   for (i in 1:length(distances)){
     d<-phyloseq::distance(data,distances[i],type=type,...)
     if (missing(adonis.options)){
-      permanova.results[[i]]=vegan::adonis(formula=form, data = df)
+      permanova.results[[i]]=vegan::adonis2(formula=form, data = df)
 
     }
     else {
-      permanova.results[[i]]=do.call(vegan::adonis,c(list(formula=form, data = df), adonis.options))
+      permanova.results[[i]]=do.call(vegan::adonis2,c(list(formula=form, data = df), adonis.options))
 
     }
-    permanova.table <- rbind(permanova.table,permanova.results[[i]][["aov.tab"]])
+    permanova.table <- rbind(permanova.table,permanova.results[[i]])
 
-    distanceColumn <- rbind(distanceColumn, data.frame(rep(distances[i],nrow(permanova.results[[i]][["aov.tab"]]))))
+    distanceColumn <- rbind(distanceColumn, data.frame(rep(distances[i],nrow(permanova.results[[i]]))))
 
   }
 
