@@ -129,8 +129,8 @@ ancomloop <-  function (input_object_phyloseq, grouping,
     taxa <- BiocGenerics::as.data.frame(phyloseq::tax_table(glom_phy))
    
     #################### Merge table with ANCOM Results #########################
-
-    table_ancom_log <- merge(taxa, tabla_ancom_sorted, by=tax.level) %>% tibble::column_to_rownames("Row.names")
+    tabla_ancom_sorted <- tibble::rownames_to_column(tabla_ancom_sorted, tax.level)
+    table_ancom_log <- merge(taxa, tabla_ancom_sorted, by=tax.level)
 
     ##IF out.unclassified set to TRUE, filter unclassified taxa at taxonomical level set by tax.out
     if (isTRUE(out.unclassified)){
