@@ -127,7 +127,7 @@ ancomloop <-  function (input_object_phyloseq, grouping,
     # BIND TAXONOMY AND CORRECTED ABUNDANCES
     glom_phy <- phyloseq::tax_glom(input_object_phyloseq, taxrank = tax.level)
     taxa <- BiocGenerics::as.data.frame(phyloseq::tax_table(glom_phy))
-    rownames(taxa) <- taxa$genus
+    rownames(taxa) <- taxa$tax.level
 
     #################### Merge table with ANCOM Results #########################
 
