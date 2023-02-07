@@ -1,72 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://nuriamw.github.io/micro4all//index.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/404.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/alpha_diversity_table.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/authors.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/ancomloop.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/index.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/ASV_final_table.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/ASV_table_classified_raw.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/BalancedAnova.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/alpha_diversity_table.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/Betadispersion.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/ancomloop.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/dunnT.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/ASV_final_table.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/kruskal.wallis.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/ASV_table_classified_raw.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/levene.test.alpha.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/BalancedAnova.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/location_phyloseq.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/Betadispersion.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/metadata.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/dunnT.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/MockCommunity.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/mock_composition.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/kruskal.wallis.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/normalized_phyloseq.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/levene.test.alpha.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/PairwiseAdonisFun.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/location_phyloseq.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/Permanova.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/metadata.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/pipe.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/MockCommunity.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/Shapiro.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/mock_composition.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/tree.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/normalized_phyloseq.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/Tukey.test.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/PairwiseAdonisFun.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/UnbalancedAnova.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/Permanova.html</loc>
   </url>
   <url>
-    <loc>https://nuriamw.github.io/micro4all//reference/wilcoxon.test.html</loc>
+    <loc>https://nuriamw.github.io/micro4all/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://nuriamw.github.io/micro4all/reference/Shapiro.html</loc>
+  </url>
+  <url>
+    <loc>https://nuriamw.github.io/micro4all/reference/tree.html</loc>
+  </url>
+  <url>
+    <loc>https://nuriamw.github.io/micro4all/reference/Tukey.test.html</loc>
+  </url>
+  <url>
+    <loc>https://nuriamw.github.io/micro4all/reference/UnbalancedAnova.html</loc>
+  </url>
+  <url>
+    <loc>https://nuriamw.github.io/micro4all/reference/wilcoxon.test.html</loc>
+  </url>
+  <url>
+    <loc>https://nuriamw.github.io/micro4all/tutorial/package_workflow.html</loc>
   </url>
 </urlset>
