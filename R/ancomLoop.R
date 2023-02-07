@@ -129,6 +129,7 @@ ancomloop <-  function (input_object_phyloseq, grouping,
     taxa <- BiocGenerics::as.data.frame(phyloseq::tax_table(glom_phy))
     rownames(taxa) <- taxa$tax.level
 
+
     #################### Merge table with ANCOM Results #########################
 
     table_ancom_log <- merge(taxa, tabla_ancom_sorted, by=0) %>% tibble::column_to_rownames("Row.names")
