@@ -98,12 +98,12 @@ ancomloop <-  function (input_object_phyloseq, grouping,
 
 
     #Now, paste these comparison name with index name
-    colnames(lfc) = c("Intercept_lfc",paste0(comparison_name,"_",names(table_ancom)[1]))
-    colnames(se) = c("Intercept_se",paste0(comparison_name,"_",names(table_ancom)[2]))
-    colnames(W) = c("Intercept_W",paste0(comparison_name,"_",names(table_ancom)[3]))
-    colnames(pval) = c("Intercept_pval",paste0(comparison_name,"_",names(table_ancom)[4]))
-    colnames(qval) = c("Intercept_qval",paste0(comparison_name,"_",names(table_ancom)[5]))
-    colnames(diff) = c("Intercept_diff",paste0(comparison_name,"_",names(table_ancom)[6]))
+    colnames(lfc) = c("Taxon","Intercept_lfc",paste0(comparison_name,"_",names(table_ancom)[1]))
+    colnames(se) = c("Taxon","Intercept_se",paste0(comparison_name,"_",names(table_ancom)[2]))
+    colnames(W) = c("Taxon","Intercept_W",paste0(comparison_name,"_",names(table_ancom)[3]))
+    colnames(pval) = c("Taxon","Intercept_pval",paste0(comparison_name,"_",names(table_ancom)[4]))
+    colnames(qval) = c("Taxon","Intercept_qval",paste0(comparison_name,"_",names(table_ancom)[5]))
+    colnames(diff) = c("Taxon","Intercept_diff",paste0(comparison_name,"_",names(table_ancom)[6]))
 
     #Each index table is properly labeled. Then, we will paste the first element
     #of each index, in that way, we'll get all columns for each comparison
@@ -125,13 +125,15 @@ ancomloop <-  function (input_object_phyloseq, grouping,
 
 
     # BIND TAXONOMY AND CORRECTED ABUNDANCES
-    glom_phy <- phyloseq::tax_glom(input_object_phyloseq, taxrank = tax.level)
+    ##Remove repeated "Taxon" columns
+    tabla_ancom_sorted <- tabla_ancom_sorted[,6:ncol(tabla_ancom_sorted)]
+    ##Set "Taxon" colname to tax.level
+    colnames(tabla_ancom_sorted)[1] <- tax.level
+
+    glom_phy <- phyloseq::tax_glom(input_object_phyloseq,
+                                   taxrank = tax.level)
     taxa <- BiocGenerics::as.data.frame(phyloseq::tax_table(glom_phy))
-
-    rownames(taxa) <- taxa$tax.level
-
     #################### Merge table with ANCOM Results #########################
-    tabla_ancom_sorted <- tibble::rownames_to_column(tabla_ancom_sorted, tax.level)
     table_ancom_log <- merge(taxa, tabla_ancom_sorted, by=tax.level)
 
     ##IF out.unclassified set to TRUE, filter unclassified taxa at taxonomical level set by tax.out
